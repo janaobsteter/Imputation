@@ -15,6 +15,10 @@ ImpCipDir=/home/jana/Genotipi/Genotipi_WORK/SNPImp_$IMPDATE/Ref${REFCHIP}_Conc${
 mkdir $ImpCipDir
 cd $ImpCipDir
 
+# Enter the path to the github directory with the script
+GitHubDir=/home/x/github/imputacija/
+ZanardiDir=$GitHubDir/Zanardi/
+
 # Enter the genotype directory
 GenDir=/home/x/JANA/Genotipi/Genotipi_DATA/Genotipi_latest/Rjava/Top/
 
@@ -64,7 +68,7 @@ rm Conc*
 
 #prepare SNP_Cluster file - a list of common SNP on the REF and CONCHIP
 #Split the list into 10x datasets - CVSNPset#
-cp /home/jana/Genotipi/Genotipi_CODES/Cluster_SNPs.R .
+cp $GitHubDir/Cluster_SNPs.R .
 sed -i "s/CONCMAP_REF/CONCPLINK_REF.map/g" Cluster_SNPs.R
 sed -i "s%CurrentImputationDir%$PWD%g" Cluster_SNPs.R
 
@@ -126,9 +130,9 @@ do
 	echo "This is the working directory"
 	echo $PWD
 	#ls $PWD
-	cp -r ~/Genotipi/Genotipi_CODES/Zanardi/* .
+	cp -r $ZanardiDir/* .
         rm -r OUTPUT Example_data
-	cp /home/jana/Genotipi/Genotipi_CODES/PARAMFILE.txt .
+	cp $ZanardiDir/PARAMFILE.txt .
 	sed -i "s%PathToPed%$PWD/CONC_Masked$i.ped,$PWD/$REFCHIP.ped%g" PARAMFILE.txt #change ped file input 
 	sed -i "s%PathToMap%$PWD/CONC_Masked$i.map,$PWD/$REFCHIP.map%g" PARAMFILE.txt #change map file input
 	sed -i "s%OutputName%ImpMasked${i}%g" PARAMFILE.txt #change output name
